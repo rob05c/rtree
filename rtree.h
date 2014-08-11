@@ -72,6 +72,7 @@ struct branch : public node {
 
   void add(std::unique_ptr<node>&);
   void split(std::unique_ptr<node>& n);
+  std::vector<std::unique_ptr<node>>::iterator smallest_expansion_child(const rect& r);
 
   std::vector<std::unique_ptr<node>> children;
 private:

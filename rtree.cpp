@@ -105,23 +105,27 @@ ord_t node::expansion(const rect& r) {
   return expansion;
 }
 
-bool branch::insert(const data& d) {
-  validate_branch(this);
-
-  auto smallest_expansion_child = children.end();
+std::vector<std::unique_ptr<node>>::iterator branch::smallest_expansion_child(const rect& r) {
+  auto smallest_child = children.end();
   {
     auto smallest_expansion = ord_t_max;
     for(auto child = children.begin(), end = children.end(); child != end; ++child) {
-      const auto child_expansion = (*child)->expansion(d.r);
+      const auto child_expansion = (*child)->expansion(r);
       if(child_expansion > smallest_expansion)
 	continue;
       smallest_expansion = child_expansion;
-      smallest_expansion_child = child;
+      smallest_child = child;
       if(smallest_expansion == 0)
 	break;
     }
   }
-  (*smallest_expansion_child)->insert(d);
+  return smallest_child;
+}
+
+bool branch::insert(const data& d) {
+  validate_branch(this);
+
+  (*smallest_expansion_child(d.r))->insert(d);
   validate_branch(this);
 }
 
