@@ -30,11 +30,11 @@ bool validate_branch(const rtree::branch* branch) {
 namespace rtree {
 const string indent_str = "  ";
 
-string get_indent_accumulator(const string s, const size_t indent) {
-  return indent == 0 ? s : get_indent_accumulator(s + indent_str, indent - 1);
-}
 string get_indent(const size_t indent) {
-  return get_indent_accumulator("", indent);
+  string s;
+  for(size_t i = 0, end = indent; i != end; ++i) 
+    s += indent_str;
+  return s;
 }
 
 size_t node::next_id = 0; // debug and TOTALLY not threadsafe
