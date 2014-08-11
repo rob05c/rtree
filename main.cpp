@@ -57,10 +57,15 @@ int main(int argc, char* argv[]) {
 */
 
   rtree::tree tree;
-  const auto NUM = 100u;
+  const auto NUM = 1000u;
   const auto RANGE = 100u;
+  const auto SIZE_RANGE = 10u;
   for(size_t i = 0, end = NUM; i != end; ++i) {
-    const rect r = {random_ord(0, RANGE), random_ord(0, RANGE), random_ord(0, RANGE), random_ord(0, RANGE)};
+    const auto top = random_ord(0, RANGE);
+    const auto left = random_ord(0, RANGE);
+    const auto bottom = top + SIZE_RANGE;
+    const auto right = left + SIZE_RANGE;
+    const rect r = {top, left, bottom, right};
     const auto key = (int) i;
     const data d = {r, key};
     tree.insert(d);
